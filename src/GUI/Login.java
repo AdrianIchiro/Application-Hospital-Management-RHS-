@@ -5,7 +5,7 @@
 package GUI;
 import javax.swing.JOptionPane;
 import model.Config;
-
+import java.sql.Connection;
 /**
  *
  * @author adria
@@ -113,18 +113,18 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             String query = "SELECT * FROM akun WHERE email='" + usernameField.getText() + "' AND password='" + passwordField.getText() + "'";
-            java.sql.Connection conn = Config.configDB();
+            java.sql.Connection conn = (Connection)Config.configDB();
             java.sql.PreparedStatement pat = conn.prepareStatement(query);
             java.sql.ResultSet rs = pat.executeQuery(query);
             
             if(rs.next()) {
-                if(usernameField.getText().equals(rs.getString("email")) && passwordField.getText().equals("password")) {
+                if(usernameField.getText().equals(rs.getString("email")) && passwordField.getText().equals(rs.getString("password"))) {
                     JOptionPane.showMessageDialog(null, "Berhasil Login");
                     this.setVisible(false);
                     new Login().setVisible(true);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Email atau Password salah");
-                }
+                } 
+            } else {
+                JOptionPane.showMessageDialog(null, "Email atau Password salah");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());

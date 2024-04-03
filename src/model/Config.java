@@ -20,7 +20,7 @@ public class Config {
             String url = "jdbc:mysql://127.0.0.1:3306/rhs_db";
             String user = "root";
             String pass = "";
-            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+            DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
             mysqlconn = DriverManager.getConnection(url, user, pass);
             
         } catch(Exception e) {
